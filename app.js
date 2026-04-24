@@ -746,7 +746,7 @@ const BOOT_LINES = [
   { text: 'LOADING CLASSIFIED DATABASE...', delay: 1800, cls: 'ok' },
   { text: 'CHECKING AUTHOR SIGNATURE: STARLINE...', delay: 2200, cls: 'ok' },
   { text: 'ANOMALY IN CHAOS ENERGY GRID DETECTED...', delay: 2600, cls: 'warning' },
-  { text: 'BYPASSING ANOMALY (STARLINE PROTOCOL)...', delay: 3000, cls: 'ER0RR' },
+  { text: 'BYPASSING ANOMALY (STARLINE PROTOCOL)...', delay: 3000, cls: 'err0r' },
   { text: 'MOUNTING FILE SYSTEM...', delay: 3350, cls: 'ok' },
   { text: 'READY.', delay: 3700, cls: '' },
 ];
@@ -783,3 +783,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateClock();
   setInterval(updateClock, 1000);
 });
+
+
+// ===================== Starline ==================
+setTimeout(() => {
+  document.querySelector('.starline-bg-boot').style.opacity = '0.5';
+}, 4000);

@@ -76,7 +76,7 @@ body::after {
 .starline-bg-boot {
   position: absolute;
   inset: 0;
-  background-image: url('starline_face.png');
+  background-image: url('img/StarLine.png');
   background-size: cover;
   background-position: center;
   opacity: 0.16;
@@ -122,12 +122,18 @@ body::after {
   color: var(--egg-green-dim);
   line-height: 1.9;
   margin-bottom: 24px;
+
+  border: 1px solid #002211;
+  padding: 12px;
+  background: rgba(0, 20, 10, 0.35);
+  box-shadow: 0 0 15px rgba(0,255,136,0.1) inset;
 }
+
 .boot-line { opacity: 0; animation: fadeIn 0.08s ease forwards; }
 .boot-line.ok::after  { content: ' [OK]';   color: var(--egg-green); }
 .boot-line.warn::after{ content: ' [WARN]'; color: var(--egg-amber); }
 .boot-line.warning::after{ content: ' [WARNING]'; color: var(--egg-amber); }
-.boot-line.error::after{ content: ' [ER0RR]'; color: var(--egg-amber); }
+.boot-line.err0r::after{ content: ' [ERR0R]'; color: var(--egg-red); }
 
 
 .boot-bar-wrap {
@@ -150,24 +156,24 @@ body::after {
 .boot-access {
   font-family: 'VT323', monospace;
   font-size: 24px;
-  color: var(--egg-amber);
+  color: var(--egg-green); /* ВОТ ЭТО МЕНЯЕМ */
   letter-spacing: 0.3em;
   opacity: 0;
   animation: fadeIn 0.3s ease 4.1s forwards, accessPulse 1s ease 4.1s;
+  text-shadow: 0 0 10px var(--egg-green), 0 0 25px rgba(0,255,136,0.4);
 }
+
 @keyframes accessPulse {
   0%{text-shadow:none} 50%{text-shadow:0 0 30px var(--egg-amber),0 0 60px rgba(255,170,0,0.5)} 100%{text-shadow:0 0 10px var(--egg-amber)}
 }
 
 .boot-author-line {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.4em;
-  color: var(--purple-glow);
-  margin-top: 14px;
-  opacity: 0;
-  animation: fadeIn 0.4s ease 4.4s forwards;
-  text-shadow: 0 0 8px var(--purple-glow);
+  color: var(--egg-green);
+  text-shadow: 0 0 8px var(--egg-green);
+
+  white-space: nowrap;      /* НЕ переносить. ЭТО ПИЗДЕЦ А НЕ ИАЛМВТОУИПСММ */
+  overflow: hidden;
+  text-overflow: ellipsis;  
 }
 
 @keyframes fadeIn { to { opacity: 1; } }
@@ -193,7 +199,7 @@ body::after {
 .starline-bg-main {
   position: fixed;
   inset: 0;
-  background-image: url('starline_face.png');
+  background-image: url('img/StarLine.png');
   background-size: cover;
   background-position: center;
   opacity: 0.055;
