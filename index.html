@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EGGMAN NETWORK // INTERNAL SYSTEM</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ ЗАГРУЗКА ============ -->
+<div id="boot-screen">
+  <div class="starline-bg-boot"></div>
+  <div class="boot-content">
+    <div class="boot-logo">EGGMAN NETWORK</div>
+    <div class="boot-subtitle">INTERNAL CLASSIFIED SYSTEM // ACCESS RESTRICTED</div>
+    <div class="boot-lines" id="boot-lines"></div>
+    <div class="boot-bar-wrap"><div class="boot-bar"></div></div>
+    <div class="boot-access" id="boot-access" style="display:none">
+      ACCESS GRaNTED <span class="cursor"></span>
+    </div>
+    <div class="boot-author-line" id="boot-author-line" style="display:none">
+      SESSION: DR. STARLINE // FILE: MOBIAN SYSTEM STRUCTURE
+    </div>
+  </div>
+</div>
+
+<!-- ============ UI ============ -->
+<div id="main-ui">
+  <div class="starline-bg-main"></div>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="tb-left">
+      <div class="tb-logo">EGGMAN NETWORK</div>
+      <div class="tb-sep">|</div>
+      <div class="tb-path">ROOT / <span id="tb-path-dyn">INDEX</span></div>
+    </div>
+    <div class="tb-right">
+      <div class="status-dot"></div>
+      <div class="tb-clock" id="tb-clock">00:00:00</div>
+      <div class="tb-badge">STARLINE</div>
+    </div>
+  </div>
+
+  <!-- LAYOUT -->
+  <div class="main-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sb-section">// ФАЙЛОВАЯ СИСТЕМА //</div>
+
+      <div class="file-item active" onclick="showHome(this)">
+        <span class="file-icon">⬡</span> MAIN INDEX
+      </div>
+
+      <!-- РАСА -->
+      <div class="folder open" id="f-race">
+        <div class="folder-hd" onclick="toggleFolder('f-race')">
+          <span>◈</span> РАСА
+          <span class="folder-arrow">▶</span>
+        </div>
+        <div class="folder-children">
+          <div class="file-item" onclick="showSubracesList(this)">
+            <span class="file-icon">▸</span> ОБЗОР ПОДВИДОВ
+          </div>
+          <div class="file-item" onclick="showSubrace('hedgehog', this)">
+            <span class="file-icon">▸</span> 🦔 HEDGEHOG
+          </div>
+          <div class="file-item" onclick="showSubrace('echidna', this)">
+            <span class="file-icon">▸</span> 🦎 ECHIDNA
+          </div>
+          <div class="file-item" onclick="showSubrace('fox', this)">
+            <span class="file-icon">▸</span> 🦊 FOX
+          </div>
+          <div class="file-item" onclick="showSubrace('cat', this)">
+            <span class="file-icon">▸</span> 🐱 CAT
+          </div>
+          <div class="file-item" onclick="showSubrace('crocodile', this)">
+            <span class="file-icon">▸</span> 🐊 CROCODILE
+          </div>
+          <div class="file-item" onclick="showSubrace('chameleon', this)">
+            <span class="file-icon">▸</span> 🦎 CHAMELEON
+          </div>
+          <div class="file-item" onclick="showSubrace('bee', this)">
+            <span class="file-icon">▸</span> 🐝 BEE
+          </div>
+        </div>
+      </div>
+
+      <!-- КЛАССЫ -->
+      <div class="folder" id="f-class">
+        <div class="folder-hd" onclick="toggleFolder('f-class')">
+          <span>◈</span> КЛАССЫ
+          <span class="folder-arrow">▶</span>
+        </div>
+        <div class="folder-children">
+          <div class="file-item" onclick="showClassesList(this)">
+            <span class="file-icon">▸</span> ОБЗОР КЛАССОВ
+          </div>
+          <div class="file-item" onclick="showClass('warrior', this)">
+            <span class="file-icon">▸</span> ⚔️ WARRIOR
+          </div>
+          <div class="file-item" onclick="showClass('specialist', this)">
+            <span class="file-icon">▸</span> 🔧 SPECIALIST
+          </div>
+          <div class="file-item" onclick="showClass('gaia', this)">
+            <span class="file-icon">▸</span> 🌿 CHILD OF GAIA
+          </div>
+          <div class="file-item" onclick="showClass('ancient', this)">
+            <span class="file-icon">▸</span> 🔥 ANCIENT BLOOD
+          </div>
+        </div>
+      </div>
+
+      <!-- МЕХАНИКИ -->
+      <div class="folder" id="f-mech">
+        <div class="folder-hd" onclick="toggleFolder('f-mech')">
+          <span>◈</span> МЕХАНИКИ
+          <span class="folder-arrow">▶</span>
+        </div>
+        <div class="folder-children">
+          <div class="file-item" onclick="showStaticDoc('doc-rings', this)">
+            <span class="file-icon">▸</span> КОЛЬЦА
+          </div>
+          <div class="file-item" onclick="showStaticDoc('doc-spindash', this)">
+            <span class="file-icon">▸</span> SPIN DASH
+          </div>
+          <div class="file-item" onclick="showStaticDoc('doc-super', this)">
+            <span class="file-icon">▸</span> SUPER FORM
+          </div>
+        </div>
+      </div>
+
+      <!-- УГРОЗЫ -->
+      <div class="folder" id="f-threats">
+        <div class="folder-hd" onclick="toggleFolder('f-threats')">
+          <span>◈</span> УГРОЗЫ
+          <span class="folder-arrow">▶</span>
+        </div>
+        <div class="folder-children">
+          <div class="file-item" onclick="showStaticDoc('doc-eggman', this)">
+            <span class="file-icon">▸</span> DOCTOR EGGMAN
+          </div>
+          <div class="file-item" onclick="showStaticDoc('doc-metal', this)">
+            <span class="file-icon">▸</span> METAL SONIC
+          </div>
+          <div class="file-item" onclick="showStaticDoc('doc-badniks', this)">
+            <span class="file-icon">▸</span> BADNIKS
+          </div>
+        </div>
+      </div>
+
+      <!-- МИР -->
+      <div class="folder" id="f-world">
+        <div class="folder-hd" onclick="toggleFolder('f-world')">
+          <span>◈</span> МИР
+          <span class="folder-arrow">▶</span>
+        </div>
+        <div class="folder-children">
+          <div class="file-item" onclick="showStaticDoc('doc-world', this)">
+            <span class="file-icon">▸</span> СРЕДА
+          </div>
+          <div class="file-item" onclick="showStaticDoc('doc-chaos', this)">
+            <span class="file-icon">▸</span> CHAOS ЭНЕРГИЯ
+          </div>
+        </div>
+      </div>
+    </div><!-- /sidebar -->
+
+    <!-- CONTENT AREA -->
+    <div class="content-area" id="content-area">
+
+      <!-- HOME VIEW -->
+      <div id="view-home" class="view home-view active">
+        <div class="home-title">MOBIAN SYSTEM STRUCTURE</div>
+        <div class="home-sub">CLASSIFIED ARCHIVE // EGGMAN NETWORK</div>
+        <div class="divider"></div>
+        <div class="home-note">
+          Настоящий архив содержит систематизированные данные о мобианской среде,
+          собранные и структурированные <span class="hl">Dr. Starline</span> для
+          последующего анализа и <span class="hl-r">возможного использования</span>.<br><br>
+          Навигация по разделам — через панель слева. Нажмите на подвид или класс для просмотра полного профиля.<br><br>
+          <span style="color:#2e0000;font-size:10px">// Несанкционированный доступ карается. Если вы читаете это — вы уже под наблюдением.</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="stat-label">ПОДВИДОВ</div><div class="stat-val">07</div></div>
+          <div class="stat-box"><div class="stat-label">КЛАССОВ</div><div class="stat-val">04</div></div>
+          <div class="stat-box"><div class="stat-label">УГРОЗ</div><div class="stat-val">03</div></div>
+          <div class="stat-box"><div class="stat-label">CHAOS EMERALDS</div><div class="stat-val">07</div></div>
+          <div class="stat-box"><div class="stat-label">SUPER FORM</div><div class="stat-val" style="font-size:17px;color:var(--egg-red)">ACTIVE</div></div>
+          <div class="stat-box"><div class="stat-label">СТАТУС АВТОРА</div><div class="stat-val" style="font-size:17px;color:var(--purple-glow)">ONLINE</div></div>
+        </div>
+      </div>
+
+      <!-- SUBRACES OVERVIEW -->
+      <div id="view-subraces" class="view home-view">
+        <div class="home-title">ПОДВИДЫ — КЛАССИФИКАЦИЯ</div>
+        <div class="home-sub">РАСА / ОБЗОР</div>
+        <div class="divider"></div>
+        <div class="card-grid" style="max-width:800px">
+          <div class="card" onclick="showSubrace('hedgehog', null)">
+            <div class="card-name">🦔 HEDGEHOG</div>
+            <div class="card-desc">Повышенная скорость. Игольчатая структура.</div>
+            <div class="card-bonus" style="color:var(--egg-green)">+ 1d4 к Spin Dash</div>
+          </div>
+          <div class="card" onclick="showSubrace('echidna', null)">
+            <div class="card-name">🦎 ECHIDNA</div>
+            <div class="card-desc">Сила и выносливость. Лазание. Планирование. ~200 лет.</div>
+            <div class="card-bonus" style="color:var(--purple-glow)">Chaos-энергия в крови</div>
+          </div>
+          <div class="card" onclick="showSubrace('fox', null)">
+            <div class="card-name">🦊 FOX</div>
+            <div class="card-desc">Интеллект. Инженерия. Возможны мутации.</div>
+            <div class="card-bonus" style="color:var(--egg-amber)">Техническое превосходство</div>
+          </div>
+          <div class="card" onclick="showSubrace('cat', null)">
+            <div class="card-name">🐱 CAT</div>
+            <div class="card-desc">Высокая реакция. Адаптивное поведение.</div>
+            <div class="card-bonus" style="color:var(--egg-green)">Девять жизней</div>
+          </div>
+          <div class="card" onclick="showSubrace('crocodile', null)">
+            <div class="card-name">🐊 CROCODILE</div>
+            <div class="card-desc">Высокая прочность. Увеличенный запас HP.</div>
+            <div class="card-bonus" style="color:var(--egg-amber)">Броневая шкура</div>
+          </div>
+          <div class="card" onclick="showSubrace('chameleon', null)">
+            <div class="card-name">🦎 CHAMELEON</div>
+            <div class="card-desc">Маскировка. Визуальная адаптация.</div>
+            <div class="card-bonus" style="color:var(--egg-green)">Активная невидимость</div>
+          </div>
+          <div class="card" onclick="showSubrace('bee', null)">
+            <div class="card-name">🐝 BEE</div>
+            <div class="card-desc">Полёт. Жало. Низкая выживаемость.</div>
+            <div class="card-bonus" style="color:var(--egg-red)">Высокий риск потери субъекта</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CLASSES OVERVIEW -->
+      <div id="view-classes" class="view home-view">
+        <div class="home-title">КЛАССЫ — КЛАССИФИКАЦИЯ</div>
+        <div class="home-sub">КЛАССЫ / ОБЗОР</div>
+        <div class="divider"></div>
+        <div class="card-grid" style="max-width:800px">
+          <div class="card" onclick="showClass('warrior', null)">
+            <div class="card-name">⚔️ WARRIOR</div>
+            <div class="card-desc">Физически ориентированный боец. Оружие, броня, выносливость.</div>
+            <div class="card-bonus" style="color:var(--egg-amber)">Три архетипа: Сила / Ловкость / Защита</div>
+          </div>
+          <div class="card" onclick="showClass('specialist', null)">
+            <div class="card-name">🔧 SPECIALIST</div>
+            <div class="card-desc">Техник или стрелок. Интеллект и дальний бой.</div>
+            <div class="card-bonus" style="color:var(--egg-green)">Технологии и точность</div>
+          </div>
+          <div class="card" onclick="showClass('gaia', null)">
+            <div class="card-name">🌿 CHILD OF GAIA</div>
+            <div class="card-desc">Энергия мира. Слабый старт — мощный финал.</div>
+            <div class="card-bonus" style="color:var(--purple-glow)">Эффективные кольца. Долгосрочная угроза.</div>
+          </div>
+          <div class="card" onclick="showClass('ancient', null)">
+            <div class="card-name">🔥 ANCIENT BLOOD</div>
+            <div class="card-desc">Врождённые стихийные способности.</div>
+            <div class="card-bonus" style="color:var(--egg-red)">Огонь / Молния / Вода</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STATIC DOCS (Механики, Угрозы, Мир) -->
+
+      <!-- RINGS -->
+      <div id="doc-rings" class="view home-view">
+        <div class="home-title">КОЛЬЦА</div>
+        <div class="home-sub">МЕХАНИКИ / ЭНЕРГЕТИЧЕСКИЙ РЕСУРС</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// БОЕВАЯ МЕХАНИКА //</div>
+          <div class="data-row"><div class="dk">ФУНКЦИЯ</div><div class="dv">Внешний слой защиты вместо прямого урона</div></div>
+          <div class="data-row"><div class="dk">ЛИМИТ</div><div class="dv grn">Накапливаются неограниченно</div></div>
+          <div class="data-row"><div class="dk">ПРИ УРОНЕ</div><div class="dv red">Все кольца теряются. Часть можно подобрать.</div></div>
+          <div class="data-row"><div class="dk">ВЫЖИВАНИЕ</div><div class="dv hi">≥ 1 кольца = нет немедленного поражения</div></div>
+          <br>
+          <div class="sec-title">// ИСПОЛЬЗОВАНИЕ //</div>
+          <div class="data-row"><div class="dk">20 КОЛЕЦ</div><div class="dv">Лечение: 1d10 или 1d20</div></div>
+          <div class="data-row"><div class="dk">50 КОЛЕЦ</div><div class="dv hi">Порог для Super Form</div></div>
+          <br>
+          <div class="sec-title">// ЛОР //</div>
+          <div class="data-row"><div class="dk">ПРИРОДА</div><div class="dv">Связаны с жизненной энергией мира</div></div>
+          <div class="data-row"><div class="dk">СТАТУС</div><div class="dv red">АНОМАЛИЯ: количество в мире снижается</div></div>
+          <div class="annotation">Уменьшение числа колец — тенденция, требующая мониторинга. Связь с нестабильностью Chaos-энергии — вероятна.</div>
+        </div>
+      </div>
+
+      <!-- SPIN DASH -->
+      <div id="doc-spindash" class="view home-view">
+        <div class="home-title">SPIN DASH</div>
+        <div class="home-sub">МЕХАНИКИ / БАЗОВАЯ ТЕХНИКА</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// ОПИСАНИЕ //</div>
+          <div class="data-row"><div class="dk">ПРИНЦИП</div><div class="dv">Тело сворачивается в сферу, накапливает кинетику, высвобождает в столкновении</div></div>
+          <div class="data-row"><div class="dk">ДОСТУПНОСТЬ</div><div class="dv grn">Всем мобианцам (базовая техника)</div></div>
+          <div class="data-row"><div class="dk">ОГРАНИЧЕНИЕ</div><div class="dv red">Недоступно крупным особям</div></div>
+          <br>
+          <div class="sec-title">// МОДИФИКАТОРЫ //</div>
+          <div class="data-row"><div class="dk">HEDGEHOG</div><div class="dv hi">+ 1d4 урона (иглы)</div></div>
+          <div class="annotation">Элегантная механика. Простота — и в этом её сила.</div>
+        </div>
+      </div>
+
+      <!-- SUPER FORM -->
+      <div id="doc-super" class="view home-view">
+        <div class="home-title">SUPER FORM</div>
+        <div class="home-sub">МЕХАНИКИ / ТРАНСФОРМАЦИЯ</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// УСЛОВИЯ АКТИВАЦИИ //</div>
+          <div class="data-row"><div class="dk">CHAOS EMERALDS</div><div class="dv red">7 из 7 — обязательно</div></div>
+          <div class="data-row"><div class="dk">КОЛЬЦА</div><div class="dv">Не менее 50 колец</div></div>
+          <br>
+          <div class="sec-title">// ЭФФЕКТЫ //</div>
+          <div class="data-row"><div class="dk">ХАРАКТЕРИСТИКИ</div><div class="dv hi">Значительное усиление всех параметров</div></div>
+          <div class="data-row"><div class="dk">ДЛИТЕЛЬНОСТЬ</div><div class="dv red">Временное состояние</div></div>
+          <div class="data-row"><div class="dk">РАСХОД</div><div class="dv red">1 кольцо в раунд</div></div>
+          <div class="annotation">Субъекты, способные достичь Super Form — приоритет мониторинга категории КРАСНЫЙ.</div>
+        </div>
+      </div>
+
+      <!-- EGGMAN -->
+      <div id="doc-eggman" class="view home-view">
+        <div class="home-title">DOCTOR EGGMAN</div>
+        <div class="home-sub">УГРОЗЫ / СУБЪЕКТ</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// ПРОФИЛЬ //</div>
+          <div class="data-row"><div class="dk">ИНТЕЛЛЕКТ</div><div class="dv hi">IQ 300</div></div>
+          <div class="data-row"><div class="dk">ТАКТИКА</div><div class="dv">Стратегическое, долгосрочное планирование</div></div>
+          <div class="data-row"><div class="dk">ПОЗИЦИЯ</div><div class="dv red">Редко покидает укреплённую базу</div></div>
+          <div class="data-row"><div class="dk">РЕСУРСЫ</div><div class="dv">Badniks — массовое производство</div></div>
+          <div class="annotation">Этот раздел создан исключительно для оперативного понимания контекста. Комментарии опущены.</div>
+        </div>
+      </div>
+
+      <!-- METAL SONIC -->
+      <div id="doc-metal" class="view home-view">
+        <div class="home-title">METAL SONIC</div>
+        <div class="home-sub">УГРОЗЫ / БОЕВАЯ ЕДИНИЦА</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// ПАРАМЕТРЫ //</div>
+          <div class="data-row"><div class="dk">СКОРОСТЬ</div><div class="dv red">ЭКСТРЕМАЛЬНАЯ</div></div>
+          <div class="data-row"><div class="dk">ФИЗИЧЕСКАЯ МОЩЬ</div><div class="dv red">ВЫСОКАЯ</div></div>
+          <div class="data-row"><div class="dk">ТИП</div><div class="dv">Механический аналог органического субъекта</div></div>
+          <div class="annotation">Наиболее эффективная единица в арсенале. Копирование данных субъектов — ключевая угроза.</div>
+        </div>
+      </div>
+
+      <!-- BADNIKS -->
+      <div id="doc-badniks" class="view home-view">
+        <div class="home-title">BADNIKS</div>
+        <div class="home-sub">УГРОЗЫ / АРМИЯ</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// ДАННЫЕ //</div>
+          <div class="data-row"><div class="dk">ПРОИЗВОДСТВО</div><div class="dv">Массовое</div></div>
+          <div class="data-row"><div class="dk">ЭФФЕКТИВНОСТЬ</div><div class="dv red">Низкая индивидуально</div></div>
+          <div class="data-row"><div class="dk">ГРУППОВАЯ УГРОЗА</div><div class="dv hi">Умеренная при числовом превосходстве</div></div>
+          <div class="annotation">Предсказуемы. Не представляют аналитического интереса.</div>
+        </div>
+      </div>
+
+      <!-- WORLD -->
+      <div id="doc-world" class="view home-view">
+        <div class="home-title">СРЕДА ОБИТАНИЯ</div>
+        <div class="home-sub">МИР / СРЕДА</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// ИНФРАСТРУКТУРА //</div>
+          <div class="data-row"><div class="dk">НАСЕЛЁННЫЕ ПУНКТЫ</div><div class="dv">Смешанные популяции мобианцев</div></div>
+          <div class="data-row"><div class="dk">ВЕРТИКАЛЬНОСТЬ</div><div class="dv">Пружины, вертикальные маршруты передвижения</div></div>
+          <br>
+          <div class="sec-title">// АНОМАЛИИ //</div>
+          <div class="data-row"><div class="dk">КОЛЬЦА</div><div class="dv red">Количество снижается. Причина — под следствием.</div></div>
+          <div class="data-row"><div class="dk">CHAOS-ЭНЕРГИЯ</div><div class="dv red">Нестабильность зафиксирована в ряде зон</div></div>
+          <div class="annotation">Нестабильность мира — мой шанс. Системы в хаосе — оптимальная среда для внедрения.</div>
+        </div>
+      </div>
+
+      <!-- CHAOS -->
+      <div id="doc-chaos" class="view home-view">
+        <div class="home-title">CHAOS ЭНЕРГИЯ</div>
+        <div class="home-sub">МИР / ПЕРВИЧНЫЙ ИСТОЧНИК СИЛЫ</div>
+        <div class="divider"></div>
+        <div style="max-width:700px">
+          <div class="sec-title">// CHAOS EMERALDS //</div>
+          <div class="data-row"><div class="dk">ПРИРОДА</div><div class="dv hi">Концентрированная Chaos-энергия</div></div>
+          <div class="data-row"><div class="dk">ФУНКЦИИ</div><div class="dv">Усиление. Трансформации. Телепортация.</div></div>
+          <div class="data-row"><div class="dk">КОЛИЧЕСТВО</div><div class="dv red">7 единиц (фиксировано)</div></div>
+          <br>
+          <div class="sec-title">// НЕСТАБИЛЬНОСТЬ //</div>
+          <div class="data-row"><div class="dk">СТАТУС</div><div class="dv red">АНОМАЛЬНАЯ НЕСТАБИЛЬНОСТЬ</div></div>
+          <div class="data-row"><div class="dk">СВЯЗЬ С КОЛЬЦАМИ</div><div class="dv pur">Вероятна. Требует исследования.</div></div>
+          <div class="annotation">Chaos-энергия — ключ ко всему. Контроль над источником = контроль над миром.</div>
+        </div>
+      </div>
+
+    </div><!-- /content-area -->
+  </div><!-- /main-layout -->
+
+  <!-- FOOTER -->
+  <div class="footer-bar">
+    <div class="footer-l">EGGMAN NETWORK v4.7.2 // SECURE CHANNEL // ENCRYPTION: ACTIVE</div>
+    <div class="footer-r">© EGGMAN INDUSTRIES // UNAUTHORIZED ACCESS WILL BE PROSECUTED</div>
+  </div>
+
+</div><!-- /main-ui -->
+
+<script src="app.js"></script>
+<script>
+  // Static doc helper
+  function showStaticDoc(id, el) {
+    clearActive();
+    if (el) el.classList.add('active');
+    // Remove dynamic page if present
+    const dyn = document.getElementById('page-view-dynamic');
+    if (dyn) dyn.remove();
+    document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+    const doc = document.getElementById(id);
+    if (doc) {
+      doc.classList.add('active');
+      document.getElementById('content-area').scrollTop = 0;
+      // build path from heading
+      const h = doc.querySelector('.home-sub');
+      if (h) updatePath(h.textContent.split(' / '));
+    }
+  }
+</script>
+</body>
+</html>
