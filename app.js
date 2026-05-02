@@ -4,6 +4,70 @@
    Чату жпт руки(или что там у него) целовал за крутые описания
    ============================================================ */
 
+// ===================== РАСОВЫЕ ИЗОБРАЖЕНИЯ =====================
+// Изображения подвидов — если нет файла, показываем заглушку
+const RACE_IMAGES = {
+  hedgehog: { src: null, label: 'HEDGEHOG // СУБЪЕКТ', emoji: '🦔' },
+  echidna:  { src: 'img/Echidna_fon.png', label: 'ECHIDNA // СУБЪЕКТ', emoji: '🦔' },
+  fox:      { src: null, label: 'FOX // СУБЪЕКТ', emoji: '🦊' },
+  cat:      { src: null, label: 'CAT // СУБЪЕКТ', emoji: '🐱' },
+  crocodile:{ src: null, label: 'CROCODILE // СУБЪЕКТ', emoji: '🐊' },
+  chameleon:{ src: null, label: 'CHAMELEON // СУБЪЕКТ', emoji: '🦎' },
+  bee:      { src: null, label: 'BEE // СУБЪЕКТ', emoji: '🐝' },
+};
+
+// ===================== ОБЩИЕ ЧЕРТЫ (расовые фиты) =====================
+const COMMON_TRAITS_HTML = `
+  <div class="sec-title">// ОБЩИЕ ЧЕРТЫ //</div>
+  <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:0.15em;margin-bottom:18px;">
+    Черты выбираются при создании персонажа или при повышении уровня (по решению мастера).<br>
+    Один персонаж может иметь не более 2 общих черт одновременно, если иное не оговорено.
+  </div>
+
+  <div class="trait-block">
+    <div class="trait-name">ШУСТРЫЙ</div>
+    <div class="trait-type-badge">ОБЩАЯ ЧЕРТА // ПАССИВНО</div>
+    <div class="trait-bonus">+2 к Ловкости</div>
+    <div class="trait-desc">
+      Рефлексы обострены сверх нормы. Персонаж двигается быстрее, реагирует точнее,
+      и первым успевает туда, куда другие ещё только смотрят. Бонус применяется к броскам
+      инициативы и к проверкам Ловкости.
+    </div>
+  </div>
+
+  <div class="trait-block">
+    <div class="trait-name">СИЛАЧ</div>
+    <div class="trait-type-badge">ОБЩАЯ ЧЕРТА // ПАССИВНО</div>
+    <div class="trait-bonus">+2 к Силе</div>
+    <div class="trait-desc">
+      Физическая мощь выходит за стандартные пределы подвида. Могут удерживать,
+      поднимать и ломать предметы, которые другие сочтут неподъёмными. Бонус применяется
+      к атакам Силы, проверкам Атлетики и ношению снаряжения.
+    </div>
+  </div>
+
+  <div class="trait-block mutation">
+    <div class="trait-name">МУТАЦИЯ: ДВУХВОСТЫЙ</div>
+    <div class="trait-type-badge">МУТАЦИЯ // РЕДКАЯ</div>
+    <div class="trait-bonus">Активная способность к полёту</div>
+    <div class="trait-desc">
+      У персонажа вырос дополнительный хвост — длинный, мощный, способный к вращению.
+      При активации мутации хвосты создают достаточную подъёмную силу для вертикального
+      взлёта.<br><br>
+      <span style="color:var(--egg-amber)">Длительность:</span> 3 + модификатор Телосложения раунда.<br>
+      <span style="color:var(--egg-amber)">Грузоподъёмность:</span> можно нести одно существо малого или среднего размера.<br>
+      <span style="color:var(--egg-amber)">Восстановление:</span> короткий отдых.<br><br>
+      <em style="color:var(--text-dim)">Мутация чаще всего встречается у лисов, однако зафиксирована и у других подвидов.
+      Механизм возникновения — предмет исследования.</em>
+    </div>
+  </div>
+
+  <div class="annotation" style="margin-top:20px">
+    // STARLINE: Дальнейшие черты будут добавлены по мере поступления полевых данных.
+    Классификация мутаций незавершена.
+  </div>
+`;
+
 // ===================== ДАННЫЕ  =====================
 
 const SUBRACES = {
@@ -13,7 +77,7 @@ const SUBRACES = {
     name: 'HEDGEHOG',
     category: 'ПОДВИД',
     quote: 'Скоростные, острые, непредсказуемые. Наиболее сложны для точного отслеживания в бою. Игольчатая структура делает стандартный физический контакт нежелательным.',
-    tabs: ['Обзор', 'Черты', 'Примечания'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты', 'Примечания'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -25,7 +89,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">БОНУС SPIN DASH</div><div class="dv hi">+ 1d4 урона (иглы)</div></div>
         <div class="annotation">Наиболее известный из подвидов — именно по этому экземпляру задокументировано большинство боевых паттернов. Скорость делает прямое столкновение нецелесообразным. Рекомендованная тактика: ловушки и ограничение пространства.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">ПОВЫШЕННАЯ СКОРОСТЬ</div>
@@ -43,6 +107,7 @@ const SUBRACES = {
           <div class="ability-text">Один раз между отдыхами: при получении урона можно мгновенно свернуться, снизив входящий урон вдвое. Не работает против магии и взрывов.</div>
         </div>
       `,
+      'Общие черты': COMMON_TRAITS_HTML,
       'Примечания': `
         <div class="sec-title">// АНАЛИТИЧЕСКИЕ ЗАПИСИ //</div>
         <div class="ability-block">
@@ -60,11 +125,11 @@ const SUBRACES = {
 
   echidna: {
     id: 'echidna',
-    icon: '🦎',
+    icon: 'нету иконки, отстаньте',
     name: 'ECHIDNA',
     category: 'ПОДВИД',
     quote: 'Древняя линия. Физиология, изменённая веками воздействия Chaos-энергии. Среди всех подвидов — наиболее связаны с изумрудами на молекулярном уровне.',
-    tabs: ['Обзор', 'Черты', 'Примечания'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты', 'Примечания'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -77,7 +142,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">ВОЗДЕЙСТВИЕ ИЗУМРУДОВ</div><div class="dv pur">Зафиксировано на физиологии</div></div>
         <div class="annotation">Субъекты эхидны уникальны по связи с источниками Chaos-энергии. Некоторые особи способны воспринимать местоположение изумрудов интуитивно. Это делает их стратегически значимыми — и потенциально опасными.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">ЛАЗАНИЕ</div>
@@ -100,6 +165,7 @@ const SUBRACES = {
           <div class="ability-text">Эхидна имеет преимущество на спасброски против эффектов Chaos-энергии и её производных. Воздействие изумрудов на них предсказуемо.</div>
         </div>
       `,
+      'Общие черты': COMMON_TRAITS_HTML,
       'Примечания': `
         <div class="sec-title">// АНАЛИТИЧЕСКИЕ ЗАПИСИ //</div>
         <div class="ability-block">
@@ -121,7 +187,7 @@ const SUBRACES = {
     name: 'FOX',
     category: 'ПОДВИД',
     quote: 'Интеллект — их оружие. Среди всех подвидов именно они способны адаптировать технологии быстрее, чем их можно нейтрализовать.',
-    tabs: ['Обзор', 'Черты', 'Мутации'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты', 'Мутации'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -132,7 +198,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">БОЕВОЙ ПРОФИЛЬ</div><div class="dv">Техник / Поддержка / Стрелок</div></div>
         <div class="annotation">Лисы — наиболее технически одарённый подвид. Субъект с двумя хвостами является задокументированным примером мутации с практической ценностью. Наблюдение: они учатся быстрее, чем мои системы успевают обновить протоколы защиты.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">ТЕХНИЧЕСКИЙ ИНТЕЛЛЕКТ</div>
@@ -150,6 +216,7 @@ const SUBRACES = {
           <div class="ability-text">Один раз за бой: лис анализирует паттерн атак врага. До конца своего следующего хода имеет преимущество на защиту от атак этого существа.</div>
         </div>
       `,
+      'Общие черты': COMMON_TRAITS_HTML,
       'Мутации': `
         <div class="sec-title">// МУТАЦИИ ПОДВИДА //</div>
         <div class="ability-block">
@@ -173,7 +240,7 @@ const SUBRACES = {
     name: 'CAT',
     category: 'ПОДВИД',
     quote: 'Адаптивность — не черта, а образ мышления. Кошки не следуют правилам — они их переосмысляют.',
-    tabs: ['Обзор', 'Черты'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -183,7 +250,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">БОЕВОЙ СТИЛЬ</div><div class="dv">Ловкость, уклонение, оппортунизм</div></div>
         <div class="annotation">Кошки непредсказуемы в бою — именно это и делает их опасными. Поведение не поддаётся стандартной модели угрозы. Расчёт паттернов затруднён.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">РЕФЛЕКТОРНЫЙ УКЛОН</div>
@@ -200,7 +267,8 @@ const SUBRACES = {
           <div class="ability-type">ПАССИВНО</div>
           <div class="ability-text">Кошка не получает урона от падения при высоте до 10 метров. С большей высоты — урон снижен вдвое.</div>
         </div>
-      `
+      `,
+      'Общие черты': COMMON_TRAITS_HTML
     }
   },
 
@@ -210,7 +278,7 @@ const SUBRACES = {
     name: 'CROCODILE',
     category: 'ПОДВИД',
     quote: 'Не самый быстрый. Не самый умный. Но когда он стоит между тобой и целью — у тебя закончились варианты.',
-    tabs: ['Обзор', 'Черты'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -221,7 +289,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">БОЕВОЙ СТИЛЬ</div><div class="dv">Танк / Ближний бой / Захваты</div></div>
         <div class="annotation">Прочные. Медленные. Если дать крокодилу приблизиться к цели — цель перестаёт быть проблемой. Именно это меня в них и беспокоит.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">БРОНИРОВАННАЯ ШКУРА</div>
@@ -238,7 +306,8 @@ const SUBRACES = {
           <div class="ability-type">ПАССИВНО</div>
           <div class="ability-text">Максимум HP увеличен на <strong>2 × уровень</strong>. При получении лечения крокодил восстанавливает на 1d4 больше.</div>
         </div>
-      `
+      `,
+      'Общие черты': COMMON_TRAITS_HTML
     }
   },
 
@@ -248,7 +317,7 @@ const SUBRACES = {
     name: 'CHAMELEON',
     category: 'ПОДВИД',
     quote: 'Они везде. И нигде. Самый сложный подвид для систематического наблюдения — именно потому, что они это знают.',
-    tabs: ['Обзор', 'Черты'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -258,7 +327,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">БОЕВОЙ СТИЛЬ</div><div class="dv">Скрытность, засада, разведка</div></div>
         <div class="annotation">Наименее изученный подвид в базе данных. Причина очевидна — они не хотят быть изученными. Примечание: мои камеры дважды фиксировали артефакты — вероятно, это были они.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">ХАМЕЛЕОН</div>
@@ -275,7 +344,8 @@ const SUBRACES = {
           <div class="ability-type">ПАССИВНО</div>
           <div class="ability-text">Атаки из состояния невидимости наносят <strong>дополнительно 1d6</strong> урона. Цель считается застигнутой врасплох до конца первого раунда.</div>
         </div>
-      `
+      `,
+      'Общие черты': COMMON_TRAITS_HTML
     }
   },
 
@@ -285,7 +355,7 @@ const SUBRACES = {
     name: 'BEE',
     category: 'ПОДВИД',
     quote: 'Летают. Жалят. Погибают первыми. Вся концепция этого подвида — эффективность ценой долговечности.',
-    tabs: ['Обзор', 'Черты'],
+    tabs: ['Обзор', 'Расовые черты', 'Общие черты'],
     panels: {
       'Обзор': `
         <div class="sec-title">// БИОЛОГИЧЕСКИЙ ПРОФИЛЬ //</div>
@@ -296,7 +366,7 @@ const SUBRACES = {
         <div class="data-row"><div class="dk">БОЕВОЙ СТИЛЬ</div><div class="dv">Воздушный бой, манёвренность</div></div>
         <div class="annotation">Высокий риск потери субъекта в первые раунды боя. Полёт компенсирует хрупкость лишь при грамотном позиционировании. Рекомендация: не ставить пчёл на передовую.</div>
       `,
-      'Черты': `
+      'Расовые черты': `
         <div class="sec-title">// РАСОВЫЕ ЧЕРТЫ //</div>
         <div class="ability-block">
           <div class="ability-name">ПОЛЁТ</div>
@@ -313,7 +383,8 @@ const SUBRACES = {
           <div class="ability-type">ПАССИВНО</div>
           <div class="ability-text">Атаки по наземным целям с позиции полёта совершаются с преимуществом. Атаки против пчелы с земли — с помехой.</div>
         </div>
-      `
+      `,
+      'Общие черты': COMMON_TRAITS_HTML
     }
   }
 };
@@ -613,6 +684,159 @@ const CLASSES = {
 
 // ===================== APP =====================
 
+// ===== STATS DOCUMENT DATA =====
+const STATS_DOC = {
+  id: 'stats',
+  name: '6 ХАРАКТЕРИСТИК',
+  category: 'МЕХАНИКИ',
+  quote: 'Шесть чисел определяют всё. Каждый бросок — это вопрос к одному из них. Понять систему — значит понять, как выживать.',
+  tabs: ['Характеристики', 'Модификаторы', 'Проверки'],
+  panels: {
+    'Характеристики': `
+      <div class="sec-title">// 6 КЛЮЧЕВЫХ ХАРАКТЕРИСТИК //</div>
+      <div class="stat-card-grid">
+        <div class="stat-card">
+          <div class="stat-card-name">СИЛА</div>
+          <div class="stat-card-abbr">СИЛ / STR</div>
+          <div class="stat-card-desc">Физическая мощь тела. Насколько сильно ты можешь ударить, поднять или сломать.</div>
+          <div class="stat-card-uses">
+            <strong>Атаки:</strong> рукопашные удары и тяжёлое оружие<br>
+            <strong>Урон:</strong> бонус к урону ближнего боя<br>
+            <strong>Навыки:</strong> Атлетика<br>
+            <strong>Прочее:</strong> прыжки, захваты, ношение снаряжения
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-name">ЛОВКОСТЬ</div>
+          <div class="stat-card-abbr">ЛОВ / DEX</div>
+          <div class="stat-card-desc">Скорость реакций, точность движений, координация. Насколько быстро и точно ты действуешь.</div>
+          <div class="stat-card-uses">
+            <strong>Атаки:</strong> лёгкое оружие, стрельба, финты<br>
+            <strong>КЗ:</strong> бонус к классу защиты (лёгкая броня)<br>
+            <strong>Навыки:</strong> Акробатика, Скрытность, Ловкость рук<br>
+            <strong>Прочее:</strong> инициатива, рефлекторные спасброски
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-name">ТЕЛОСЛОЖЕНИЕ</div>
+          <div class="stat-card-abbr">ТЕЛ / CON</div>
+          <div class="stat-card-desc">Выносливость и физическое здоровье. Насколько долго ты можешь держаться.</div>
+          <div class="stat-card-uses">
+            <strong>HP:</strong> бонус к хитам при повышении уровня<br>
+            <strong>Концентрация:</strong> спасброски при удерживании заклинаний<br>
+            <strong>Прочее:</strong> усталость, яды, болезни, выживание
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-name">ИНТЕЛЛЕКТ</div>
+          <div class="stat-card-abbr">ИНТ / INT</div>
+          <div class="stat-card-desc">Память, логика, аналитика. Способность обрабатывать информацию и принимать точные решения.</div>
+          <div class="stat-card-uses">
+            <strong>Навыки:</strong> Магия, История, Природа, Религия, Расследование<br>
+            <strong>Техника:</strong> работа с устройствами, взлом, изучение схем<br>
+            <strong>Прочее:</strong> решение головоломок, анализ слабостей
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-name">МУДРОСТЬ</div>
+          <div class="stat-card-abbr">МДР / WIS</div>
+          <div class="stat-card-desc">Восприятие окружения, интуиция, здравый смысл. Видеть то, что другие упускают.</div>
+          <div class="stat-card-uses">
+            <strong>Навыки:</strong> Восприятие, Проницательность, Уход за животными, Медицина<br>
+            <strong>Связь с миром:</strong> Chaos-резонанс, чутьё на опасность<br>
+            <strong>Прочее:</strong> мудростные спасброски, заклинания лекарей
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-name">ХАРИЗМА</div>
+          <div class="stat-card-abbr">ХАР / CHA</div>
+          <div class="stat-card-desc">Сила личности, убедительность, лидерство. Влияние на других — словом или присутствием.</div>
+          <div class="stat-card-uses">
+            <strong>Навыки:</strong> Убеждение, Обман, Запугивание, Выступление<br>
+            <strong>Социальные:</strong> торговля, дипломатия, переговоры<br>
+            <strong>Прочее:</strong> харизматные способности, воодушевление союзников
+          </div>
+        </div>
+      </div>
+      <div class="annotation">
+        // STARLINE: Характеристики определяются при создании персонажа — методом 4d6 (убрать наименьшее).
+        Расовые бонусы накладываются поверх. Черты могут дополнительно изменять значения.
+      </div>
+    `,
+    'Модификаторы': `
+      <div class="sec-title">// МОДИФИКАТОРЫ ХАРАКТЕРИСТИК //</div>
+      <div class="stat-modifier-box">
+        <div style="font-family:'Share Tech Mono',monospace;font-size:9px;color:var(--text-dim);letter-spacing:0.2em;margin-bottom:4px;">ФОРМУЛА РАСЧЁТА:</div>
+        <div class="modifier-formula">МОД = ⌊(ЗНАЧЕНИЕ − 10) / 2⌋</div>
+        <div style="font-size:10px;color:var(--text-dim);margin-top:6px;">Округление всегда вниз. Значение 9 даёт −1, а не +0.</div>
+
+        <table class="modifier-table">
+          <thead><tr><th>ЗНАЧЕНИЕ</th><th>МОДИФИКАТОР</th><th>ПРИМЕР</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>−5</td><td>Критически ослаблен</td></tr>
+            <tr><td>4–5</td><td>−3</td><td>Очень слабый</td></tr>
+            <tr><td>8–9</td><td>−1</td><td>Ниже среднего</td></tr>
+            <tr><td>10–11</td><td>+0</td><td>Обычный мобианец</td></tr>
+            <tr><td>12–13</td><td>+1</td><td>Немного выше нормы</td></tr>
+            <tr><td>14–15</td><td>+2</td><td>Заметно сильнее</td></tr>
+            <tr><td>16–17</td><td>+3</td><td>Элитный уровень</td></tr>
+            <tr><td>18–19</td><td>+4</td><td>Исключительный</td></tr>
+            <tr><td>20</td><td>+5</td><td>Предел без усиления</td></tr>
+            <tr><td>24</td><td>+7</td><td>Super Form уровень</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sec-title">// БОНУС МАСТЕРСТВА //</div>
+      <div class="data-row"><div class="dk">УР. 1–4</div><div class="dv grn">+2</div></div>
+      <div class="data-row"><div class="dk">УР. 5–8</div><div class="dv grn">+3</div></div>
+      <div class="data-row"><div class="dk">УР. 9–12</div><div class="dv hi">+4</div></div>
+      <div class="data-row"><div class="dk">УР. 13–16</div><div class="dv hi">+5</div></div>
+      <div class="data-row"><div class="dk">УР. 17–20</div><div class="dv red">+6</div></div>
+      <br>
+      <div style="font-size:10.5px;color:var(--text-dim);line-height:1.8;">
+        Бонус мастерства прибавляется к броскам атаки, спасброскам и проверкам навыков,
+        которыми персонаж <em>владеет</em>. Экспертиза (у некоторых классов) удваивает его.
+      </div>
+    `,
+    'Проверки': `
+      <div class="sec-title">// КАК РАБОТАЮТ ПРОВЕРКИ //</div>
+      <div style="font-size:11px;color:var(--text-dim);line-height:1.9;margin-bottom:20px;">
+        Когда персонаж пытается сделать что-то, исход которого неясен —
+        мастер называет характеристику и Сложность (СЛ). Игрок бросает <strong style="color:var(--egg-amber)">d20</strong>, прибавляет модификатор, и сравнивает с СЛ.
+        <br><br>
+        <strong style="color:var(--egg-amber)">Результат ≥ СЛ</strong> → успех. <span style="color:var(--egg-red)">Результат < СЛ</span> → провал.
+      </div>
+
+      <div class="sec-title">// ТИПОВЫЕ СЛОЖНОСТИ //</div>
+      <div class="data-row"><div class="dk">СЛ 5</div><div class="dv grn">Очень легко — базовое действие</div></div>
+      <div class="data-row"><div class="dk">СЛ 10</div><div class="dv grn">Легко — любой справится при удаче</div></div>
+      <div class="data-row"><div class="dk">СЛ 15</div><div class="dv hi">Средне — требует навыка</div></div>
+      <div class="data-row"><div class="dk">СЛ 20</div><div class="dv hi">Сложно — нужен опыт</div></div>
+      <div class="data-row"><div class="dk">СЛ 25</div><div class="dv red">Очень сложно — только мастер своего дела</div></div>
+      <div class="data-row"><div class="dk">СЛ 30</div><div class="dv red">Почти невозможно — легендарный уровень</div></div>
+
+      <div class="sec-title" style="margin-top:20px">// ПРЕИМУЩЕСТВО И ПОМЕХА //</div>
+      <div class="check-block">
+        <div class="check-block-name">ПРЕИМУЩЕСТВО</div>
+        <div class="check-block-desc">Бросаешь d20 дважды — берёшь <strong>лучший</strong> результат. Получается при благоприятных условиях, союзнической помощи или расовых способностях.</div>
+      </div>
+      <div class="check-block">
+        <div class="check-block-name">ПОМЕХА</div>
+        <div class="check-block-desc">Бросаешь d20 дважды — берёшь <strong>худший</strong> результат. Получается при неблагоприятных условиях, ранениях, ослеплении или эффектах врагов.</div>
+      </div>
+      <div class="check-block">
+        <div class="check-block-name">СПАСБРОСКИ</div>
+        <div class="check-block-desc">Реакция тела или воли на внешнее воздействие — яд, взрыв, заклинание, падение. Мастер объявляет тип (СИЛ/ЛОВ/ТЕЛ/ИНТ/МДР/ХАР) и СЛ. Механика та же: d20 + модификатор vs СЛ.</div>
+      </div>
+      <div class="annotation" style="margin-top:16px">
+        // Критический успех (нат. 20) и провал (нат. 1) для проверок характеристик — по усмотрению мастера.
+        Для атак: 20 = автоматический критический урон, 1 = автомисс.
+      </div>
+    `
+  }
+};
+
 let currentPath = ['INDEX'];
 
 function updatePath(parts) {
@@ -648,7 +872,7 @@ function showSubrace(id, triggerEl) {
   clearActive();
   if (triggerEl) triggerEl.classList.add('active');
 
-  buildPageView(data);
+  buildPageView(data, RACE_IMAGES[id] || null);
   updatePath(['РАСА', 'ПОДВИДЫ', data.name]);
 }
 
@@ -658,37 +882,48 @@ function showClass(id, triggerEl) {
   clearActive();
   if (triggerEl) triggerEl.classList.add('active');
 
-  buildPageView(data);
+  buildPageView(data, null);
   updatePath(['КЛАССЫ', data.name]);
 }
 
-function buildPageView(data) {
+function showStatsDoc(el) {
+  clearActive();
+  if (el) el.classList.add('active');
+  buildPageView(STATS_DOC, null);
+  updatePath(['МЕХАНИКИ', '6 ХАРАКТЕРИСТИК']);
+}
+
+function buildPageView(data, imgData) {
   const area = document.getElementById('content-area');
 
-  // Remove previous page view
   const old = document.getElementById('page-view-dynamic');
   if (old) old.remove();
 
-  // Hide all other views
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
 
-  // Build
   const wrap = document.createElement('div');
   wrap.className = 'view page-view active';
   wrap.id = 'page-view-dynamic';
 
-  // Hero
+  // ---- HERO (top bar, full width) ----
   const hero = document.createElement('div');
   hero.className = 'page-hero';
   hero.innerHTML = `
     <div class="page-hero-tag"><span>${data.category}</span> // EGGMAN NETWORK CLASSIFIED</div>
-    <div class="page-hero-title">${data.icon} ${data.name}</div>
+    <div class="page-hero-title">${data.icon ? data.icon + ' ' : ''}${data.name}</div>
     <div class="page-hero-sub">AUTHOR: DR. STARLINE // ЭГГМАН НЕТВОРК</div>
     <div class="page-hero-quote">${data.quote}</div>
   `;
   wrap.appendChild(hero);
 
-  // Tabs nav
+  // ---- BODY: left content + right image panel ----
+  const body = document.createElement('div');
+  body.className = 'page-body';
+
+  // Left: tabs + panels
+  const main = document.createElement('div');
+  main.className = 'page-main';
+
   const tabsNav = document.createElement('div');
   tabsNav.className = 'page-tabs';
   data.tabs.forEach((tab, i) => {
@@ -698,17 +933,43 @@ function buildPageView(data) {
     btn.onclick = () => switchTab(wrap, tab, btn);
     tabsNav.appendChild(btn);
   });
-  wrap.appendChild(tabsNav);
+  main.appendChild(tabsNav);
 
-  // Tab panels
   data.tabs.forEach((tab, i) => {
     const panel = document.createElement('div');
     panel.className = 'tab-panel' + (i === 0 ? ' active' : '');
     panel.dataset.tab = tab;
     panel.innerHTML = data.panels[tab] || '<p style="color:var(--text-dim)">Данные отсутствуют.</p>';
-    wrap.appendChild(panel);
+    main.appendChild(panel);
   });
 
+  body.appendChild(main);
+
+  // Right: race image panel (only when imgData provided)
+  if (imgData) {
+    const panel = document.createElement('div');
+    panel.className = 'page-race-panel';
+
+    if (imgData.src) {
+      panel.innerHTML = `
+        <img class="race-panel-image" src="${imgData.src}" alt="${data.name}"
+          onerror="this.outerHTML='<div class=\\'race-panel-placeholder\\'><div class=\\'ph-icon\\'>${imgData.emoji||'?'}</div><div>ФАЙЛ НЕ НАЙДЕН</div></div>'">
+        <div class="race-panel-label">${imgData.label}</div>
+      `;
+    } else {
+      panel.innerHTML = `
+        <div class="race-panel-placeholder">
+          <div class="ph-icon">${imgData.emoji || '?'}</div>
+          <div>ИЗОБРАЖЕНИЕ<br>НЕ ЗАГРУЖЕНО</div>
+          <div class="race-panel-no-image-tag">// NO FILE //</div>
+        </div>
+        <div class="race-panel-label">${imgData.label}</div>
+      `;
+    }
+    body.appendChild(panel);
+  }
+
+  wrap.appendChild(body);
   area.appendChild(wrap);
   area.scrollTop = 0;
 }
